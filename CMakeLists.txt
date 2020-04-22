@@ -29,6 +29,7 @@ include_directories(
     Libs/glew-1.13.0/include/
     common/include/
     Libs/include
+    #Libs/glad/include
 )
 
 set(ALL_LIBS
@@ -37,6 +38,7 @@ set(ALL_LIBS
     GLEW_1130
     glut
     freeimage
+   # glad
 )
 
 add_definitions(
@@ -374,6 +376,29 @@ target_link_libraries(20_Solar_System
 set_target_properties(20_Solar_System PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/20_Solar_System/")
 create_target_launcher(20_Solar_System WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/20_Solar_System/")
 
+# 21_ShadowMapping
+add_executable(21_ShadowMapping
+    21_ShadowMapping/21_ShadowMapping.cpp
+    21_ShadowMapping/camera.h
+    common/Shader.cpp
+    common/Sphere.cpp
+
+    21_ShadowMapping/depth_map.frag
+    21_ShadowMapping/depth_map.vert
+    21_ShadowMapping/shadow.frag
+    21_ShadowMapping/shadow.vert
+    21_ShadowMapping/shadow_depth.frag
+    21_ShadowMapping/shadow_depth.vert
+)
+#add_subdirectory("Libs/glad" glad)
+#target_link_libraries(21_ShadowMapping glad)
+target_link_libraries(21_ShadowMapping
+    ${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(21_ShadowMapping PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/21_ShadowMapping/")
+create_target_launcher(21_ShadowMapping WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/21_ShadowMapping/")
+
 if (NOT ${CMAKE_GENERATOR} MATCHES "Xcode" )
 add_custom_command(
    TARGET 1_Basic_Triangle POST_BUILD
@@ -455,7 +480,10 @@ add_custom_command(
    TARGET 20_Solar_System POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/20_Solar_System${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/20_Solar_System/"
 )
-
+add_custom_command(
+   TARGET 21_ShadowMapping POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/21_ShadowMapping${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/21_ShadowMapping/"
+)
 
 elseif (${CMAKE_GENERATOR} MATCHES "Xcode" )
 

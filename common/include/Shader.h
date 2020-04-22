@@ -3,6 +3,12 @@
 #include <GL/glew.h>
 #include <stdlib.h>
 
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <glm/glm.hpp>
+
 class Shader {
 public:
 	Shader();
@@ -11,6 +17,10 @@ public:
 	GLuint init(const char *vsFile, const char *fsFile);
 	GLuint init(const char *vsFile, const char *fsFile, const char* gs);
 	GLuint init(const char *vsFile, const char *fsFile, const char* tcs, const char* tes);
+        void setInt(const std::string &name, int value);
+        void setMat4(const std::string &name, const glm::mat4 &mat);
+        void setVec3(const std::string &name, const glm::vec3 &value);
+        void setFloat(const std::string &name, float value);
 
 	unsigned int id();
 
